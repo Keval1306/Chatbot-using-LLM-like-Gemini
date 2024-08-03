@@ -19,8 +19,9 @@ except Exception as e:
 st.title("Welcome our chatbot:")
 chat_avatar = "ai logo.jpg"
 user_avtar = "user logo.png"
+
 with st.chat_message("assistant", avatar=chat_avatar):
-    st.write("How can I assist you?")
+    st.write("Hello! How can I assist you today?")
 
 with st.chat_message("user",avatar=user_avtar):
     user_message = st.chat_input("Enter your query:")
