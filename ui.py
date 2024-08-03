@@ -1,12 +1,20 @@
 import streamlit as st
-import google.generativeai as genai
 import os
-#from google import generativeai as genai
+from google import generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel('gemini-1.0-pro-latest')
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    st.error("GEMINI_API_KEY not found in environment variables.")
+else:
+    genai.configure(api_key=api_key)
+
+# Initialize the model
+try:
+    model = genai.GenerativeModel('gemini-1.0-pro-latest')
+except Exception as e:
+    st.error(f"Error initializing GenerativeModel: {e}")
 
 st.title("Welcome our chatbot:")
 chat_avatar = "ai logo.jpg"
