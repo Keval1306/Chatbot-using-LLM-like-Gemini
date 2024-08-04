@@ -1,38 +1,46 @@
 import streamlit as st
+import google.generativeai as genai
 import os
-from google import generativeai as genai
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    st.error("GEMINI_API_KEY not found in environment variables.")
-else:
-    genai.configure(api_key=api_key)
 
-# Initialize the model
-try:
-    model = genai.GenerativeModel('gemini-1.0-pro-latest')
-except Exception as e:
-    st.error(f"Error initializing GenerativeModel: {e}")
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+model = genai.GenerativeModel("gemini-1.5-pro")
 
 st.title("Welcome our chatbot:")
 chat_avatar = "ai logo.jpg"
 user_avtar = "user logo.png"
 
-with st.chat_message("assistant"):
-    st.write("Hello! How can I assist you today?")
-
-with st.chat_message("user"):
-    user_message = st.chat_input("Enter your query:")
 response = ""
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
+with st.chat_message("assistant", avatar=chat_avatar):
+    st.write("How can I assist you?")
+
+user_message = st.chat_input("Enter your query:", key="input")
+
 if user_message:
-    response = model.generate_content(user_message)
+    st.session_state.messages.append({"role": "user", "content": user_message})
 
-    if response and response.candidates:
-        response = response.candidates[0].content.parts[0].text
+    with st.chat_message("user", avatar=user_avtar):
+        st.markdown(user_message)
 
-if user_message:
-    st.write(response)
+    with st.spinner("Generating..."):
+        try:
+            response = model.generate_content(user_message)
+            if response and response.candidates:
+                response_text = response.candidates[0].content.parts[0].text
+
+            st.session_state.messages.append({"role": "assistant", "content": response_text})
+
+            with st.chat_message("assistant", avatar=chat_avatar):
+                st.markdown(response_text)
+
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
 
 
+
+#print(os.environ.get("GEMINI_API_KEY"))
