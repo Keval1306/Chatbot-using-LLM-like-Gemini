@@ -21,8 +21,8 @@ genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-pro")
 
 st.title("Welcome to  K.E.V.A.L.AI :")
-chat_avatar = "ai logo.jpg"
-user_avatar = "K.jpg"
+chat_avatar = "https://drive.google.com/file/d/1_uZcypYwGQL6JJZDC9Ln45YancZZi30F/view?usp=sharing"
+user_avatar = "https://drive.google.com/file/d/1szhNOCMvaqBVN7Yw1HwdXugLAbd0xO7d/view?usp=drive_link"
 
 response = ""
 if 'messages' not in st.session_state:
