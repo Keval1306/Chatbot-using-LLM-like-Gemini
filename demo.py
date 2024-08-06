@@ -21,14 +21,13 @@ genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 model = genai.GenerativeModel("gemini-1.5-pro")
 
 st.title("Welcome to  K.E.V.A.L.AI :")
-chat_avatar = "https://ibb.co/dP39fTX"
-user_avatar = "https://ibb.co/gtqcrPS"
+
 
 response = ""
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-with st.chat_message("assistant", avatar=chat_avatar):
+with st.chat_message("assistant"):
     st.write("How can I assist you?")
 
 user_message = st.chat_input("Enter your query:", key="input")
@@ -37,7 +36,7 @@ if user_message:
     st.session_state.messages.append({"role": "user", "content": user_message})
     st.success('wait atleast 4 seconds for your answer', icon="👍")
 
-    with st.chat_message("user", avatar=user_avatar):
+    with st.chat_message("user"):
         st.markdown(user_message)
 
     with st.spinner("Generating..."):
