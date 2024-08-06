@@ -47,7 +47,7 @@ if user_message:
 
             st.session_state.messages.append({"role": "assistant", "content": response_text})
 
-            with st.chat_message("assistant", avatar=chat_avatar):
+            with st.chat_message("assistant"):
                 st.markdown(response_text)
 
         except Exception as e:
