@@ -52,7 +52,7 @@ To get started with the chatbot, follow these steps:
 To run the chatbot, execute the following command:
 
 ```bash
-python ui.py
+streamlit run demo.py
 ```
 
 You can interact with the chatbot through the command line or integrate it with a web interface.
